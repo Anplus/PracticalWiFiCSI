@@ -17,7 +17,7 @@ freq_cent = median(opt.freq);
 const = 1j*2*pi/(3e8);
 const2 = 1j*2*pi*opt.ant_sep*freq_cent/(3e8);
 
-h = h.';
+% h = h.';
 d_rep = const*(opt.freq'.*repmat(d_vals,length(opt.freq),1));
 temp = h*exp(d_rep);
 

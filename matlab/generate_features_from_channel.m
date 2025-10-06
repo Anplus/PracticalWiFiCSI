@@ -30,7 +30,14 @@ for j=1:n_ap
         P = compute_2D_multipath_profile(squeeze(channels(:,j,:)),theta_vals,d_vals,opt);
     end
     P_out = convert_multipathProfile_to_xy(P,theta_vals,d_vals,d1,d2,ap{j});
-    features(j,:,:) = abs(P_out)./abs(P_out(:));
+    % features(j,:,:) = abs(P_out)./abs(P_out(:));
+    den = max(abs(P_out(:))); % denominator
+    if den == 0
+        feat = zeros(size(P_out));
+    else
+        feat = abs(P_out) / den;      % values in [0,1]
+    end
+    features(j,:,:) = reshape(feat, [1, size(P_out,1), size(P_out,2)]);
 end
 
 end
