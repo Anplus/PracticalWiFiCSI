@@ -1,20 +1,18 @@
 clearvars
 close all;
-%% Load data (channels, ap, ap_aoas, RSSI, labels, opt, d1, d2)
-
+%% Load data (channels, ap, ap_aoa, RSSI, labels, opt, d1, d2)
 CHAN_DATA_DIR = '/Users/za70400/Documents/Dataset/DLoc';
 DATASET_NAME = 'channels_jacobs_July28.mat';
 load(fullfile(CHAN_DATA_DIR, DATASET_NAME));
 %% define parameters
-
 D_VALS = -10:0.1:30;
 THETA_VALS = -pi/2:0.01:pi/2;
-x_len = length(xLabels);
 y_len = length(yLabels);
+x_len = length(xLabels);
 ap_index = 3;
 % d1 and d2
-d1 = yLabels;
-d2 = xLabels;
+d1 = xLabels;
+d2 = yLabels;
 %%
 figure; hold on; grid on;
 xlabel('X (m)'); ylabel('Y (m)');
@@ -44,18 +42,20 @@ legend show;
 
 [n_datapoints, n_freq, n_ant, n_ap] = size(channels);
 % for demo, only process the first 10 samples
-n_datapoints = 100;
-channels = channels(n_datapoints, :,:,:);
-features = zeros(n_datapoints, n_ap, x_len, y_len);
+n_datapoints = 10;
+channels = channels(1:n_datapoints, :,:,:);
+features = zeros(n_datapoints, n_ap, y_len, x_len);
+% 11440 4 161 361
 %% generate features
-parfor i = 1:n_datapoints
-    features(i,:,:,:) = generate_features_from_channel(channels,ap,...
+for i = 1:n_datapoints
+    temp = generate_features_from_channel(channels(i,:,:,:),ap,...
         THETA_VALS,D_VALS,d1,d2,ap_index,opt);
+    features(i,:,:,:) = temp;
 end
 
 %% plot heatmap
 figure; tiledlayout(2,2);
-sample_index = 100;
+sample_index = 10;
 for k = 1:4
     % Get 2-D matrix for AP k from features:
     C = squeeze(features(sample_index, k, :, :));        % try [ny x nx]
