@@ -18,8 +18,7 @@ function features = generate_features_from_channel(channels,ap,theta_vals,d_vals
 %
 % OUTPUT
 % feature        : [n_ap, x_values, y_values] MATRIX n_ap XY feature images
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
 n_ap=length(ap);
 
 features = zeros(n_ap,length(d2),length(d1));
@@ -29,6 +28,9 @@ for j=1:n_ap
     elseif ap_index==2
         P = compute_2D_multipath_profile(squeeze(channels(:,j,:)),theta_vals,d_vals,opt);
     end
+    % figure;
+    % imagesc(theta_vals, d_vals, P);       % C must be [length(d2) x length(d1)]
+    axis xy; axis image; colormap hot; colorbar;    
     P_out = convert_multipathProfile_to_xy(P,theta_vals,d_vals,d1,d2,ap{j});
     features(j,:,:) = abs(P_out)./max(abs(P_out(:)));
 end

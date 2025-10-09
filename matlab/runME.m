@@ -1,15 +1,14 @@
 clearvars
 close all;
-%% Load data (channels, ap, ap_aoa, RSSI, labels, opt, d1, d2)
-CHAN_DATA_DIR = '/Users/za70400/Documents/Dataset/DLoc';
+%% Load data (channels, ap, ap_aoas, RSSI, labels, opt, d1, d2)
+CHAN_DATA_DIR = './';
 DATASET_NAME = 'channels_jacobs_July28.mat';
 load(fullfile(CHAN_DATA_DIR, DATASET_NAME));
 %% define parameters
-D_VALS = -10:0.1:30;
-THETA_VALS = -pi/2:0.01:pi/2;
+D_VALS = -10:0.1:30; % Vector of Distance search space
+THETA_VALS = -pi/2:0.01:pi/2; % Vector of AoA search space
 y_len = length(yLabels);
 x_len = length(xLabels);
-ap_index = 3;
 % d1 and d2
 d1 = xLabels;
 d2 = yLabels;
@@ -39,23 +38,24 @@ end
 plot(labels(:,1), labels(:,2));
 legend show;
 
-
+%% 
+% channels [n_datapoints x n_frequency x n_ant X n_ap]
 [n_datapoints, n_freq, n_ant, n_ap] = size(channels);
+ap_index = 3;
 % for demo, only process the first 10 samples
 n_datapoints = 10;
 channels = channels(1:n_datapoints, :,:,:);
 features = zeros(n_datapoints, n_ap, y_len, x_len);
-% 11440 4 161 361
 %% generate features
+% parfor i = 1:n_datapoints
 for i = 1:n_datapoints
-    temp = generate_features_from_channel(channels(i,:,:,:),ap,...
+    features(i,:,:,:) = generate_features_from_channel(squeeze(channels(i,:,:,:)),ap,...
         THETA_VALS,D_VALS,d1,d2,ap_index,opt);
-    features(i,:,:,:) = temp;
 end
 
 %% plot heatmap
 figure; tiledlayout(2,2);
-sample_index = 10;
+sample_index = 1;
 for k = 1:4
     % Get 2-D matrix for AP k from features:
     C = squeeze(features(sample_index, k, :, :));        % try [ny x nx]
@@ -78,11 +78,11 @@ for k = 1:4
         'MarkerSize',6, 'DisplayName','Antenna');
     % AP center
     center = mean(ap_k,1);
-    plot(center(1), center(2), 'wx', 'MarkerSize',10, 'LineWidth',2);
+    plot(center(1), center(2), 'wx', 'MarkerSize',30, 'LineWidth',2);
     
     
     % plot the position of transmitter
     plot(labels(sample_index, 1), labels(sample_index,2), 'kp', 'MarkerFaceColor','y', ...
-        'MarkerSize',10, 'DisplayName','Transmitter');
+        'MarkerSize',20, 'DisplayName','Transmitter');
     hold off;
 end

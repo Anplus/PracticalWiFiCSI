@@ -12,12 +12,12 @@ function MP=compute_2D_multipath_profile(h,theta_vals,d_vals,opt)
 % MP                 : [n_thetas, n_distances] MATRIX AoA-ToF Multipath
 %                      Profile 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% follow the spotfi paper
 freq_cent = median(opt.freq);
 const = 1j*2*pi/(3e8);
 const2 = 1j*2*pi*opt.ant_sep*freq_cent/(3e8);
 
-% h = h.';
+h = h.';
 d_rep = const*(opt.freq'.*repmat(d_vals,length(opt.freq),1));
 temp = h*exp(d_rep);
 
