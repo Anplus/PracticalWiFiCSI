@@ -30,7 +30,7 @@ The CSI data is named as channels_<setup_name_from_above>.mat. These MATLAB file
 - d2 (yLabels): The sampled y-axis of the space under consideration
 
 We measure the **channel/channel state information (CSI) for one wifi access point** as
-\[
+$
 \mathbf{h}=
 \begin{bmatrix}
 \text{csi}_{1,1} & \text{csi}_{1,2} & \cdots & \text{csi}_{1,N} \\
@@ -38,7 +38,7 @@ We measure the **channel/channel state information (CSI) for one wifi access poi
 \vdots & \vdots & \ddots & \vdots \\
 \text{csi}_{M,1} & \text{csi}_{M,2} & \cdots & \text{csi}_{M,N}
 \end{bmatrix}\in\mathbb{C}^{M\times N}.
-\]
+$
 
 **Explanation of symbols.** 
 Each entry \(\text{csi}_{m,n}\) captures the **channel frequency response (CFR)** for receive antenna \(m\) and subcarrier \(f_n\), including both amplitude and phase (this corresponds to the “channels” in the `.mat` file).
