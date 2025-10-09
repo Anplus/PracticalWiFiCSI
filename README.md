@@ -29,7 +29,8 @@ The CSI data is named as channels_<setup_name_from_above>.mat. These MATLAB file
 - d1 (xLabels): The sampled x-axis of the space under consideration
 - d2 (yLabels): The sampled y-axis of the space under consideration
 
-We measure the **channel/channel state information (CSI) for one wifi access point** as
+We measure the **channel/channel state information (CSI) for one wifi access point** $h$ as
+
 $
 \mathbf{h}=
 \begin{bmatrix}
