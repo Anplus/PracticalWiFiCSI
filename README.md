@@ -51,12 +51,14 @@ Each entry \(\text{csi}_{m,n}\) captures the **channel frequency response (CFR)*
 ![AoA model](./output/aoa.png)
 
 We assume a **Uniform Linear Array (ULA)** with \(M\) antennas, spacing \(d\). A signal arriving at angle \(\theta\) introduces a relative phase shift between antennas:
+
 $$
 e^{-j \frac{2\pi f_c}{c} (m-1)\, d \sin(\theta)}, \quad m=1,\dots,M
 $$
 where \(f_c\) is the center frequency and \(c\) is the speed of light.
 
 The **steering vector** is
+
 $$
 \mathbf{a}(\theta)=
 \begin{bmatrix}
