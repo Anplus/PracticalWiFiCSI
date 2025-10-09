@@ -55,6 +55,7 @@ We assume a **Uniform Linear Array (ULA)** with \(M\) antennas, spacing \(d\). A
 $$
 e^{-j \frac{2\pi f_c}{c} (m-1)\, d \sin(\theta)}, \quad m=1,\dots,M
 $$
+
 where \(f_c\) is the center frequency and \(c\) is the speed of light.
 
 The **steering vector** is
