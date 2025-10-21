@@ -28,7 +28,7 @@ def train(model_type, device):
     model.apply(init_weights)
 
     model.to(device)
-    batch_size = 32  # Reduced from 64
+    batch_size = 1024
     epoch = 200
 
     myloss = nn.CrossEntropyLoss().to(device)
@@ -55,7 +55,7 @@ def train(model_type, device):
         correct = 0
 
         print("-----{} epoch for training-----".format(i + 1))
-        
+        print("the number of batches: ", len(train_dataloader))
         for data in train_dataloader:
             csi, label = data
             csi = csi.to(device)
@@ -68,6 +68,7 @@ def train(model_type, device):
             loss.backward()
             optimizer.step()
             correct += (x.argmax(axis=1) == label).sum().item()
+            print("Batch loss: {}, acc:{}".format(loss.item(), (x.argmax(axis=1) == label).sum().item()/x.size(0)))
 
 
         print("Loss:{}, acc:{}".format(total_loss/train_dataset.__len__(), correct/train_dataset.__len__()))
@@ -75,7 +76,7 @@ def train(model_type, device):
         scheduler.step()
 
         if (i+1)%5==0:  # for every 5 epochs to save model and test
-            save_path = "/srv/csj/tutorial_submit/model_file/" + model_type + "_model_{}.pth".format(i+1)
+            save_path = "./model_file/" + model_type + "_model_{}.pth".format(i+1)
             torch.save(model, save_path)
             acc, avg_loss = test(device, save_path)
             print("-----{} epoch for testing-----".format(i + 1))
@@ -95,6 +96,6 @@ if __name__ == "__main__":
         print("CUDA version (PyTorch build):", torch.version.cuda)
     print("Start training...")
     # train("AlexNet", device = torch.device("cuda:0"))
-    train("AlexNet", device = torch.device("cpu"))
+    train("AlexNet", device = torch.device("cuda:0"))
     # train("ResNet", device = torch.device("cuda:0"))
     # train("Transformer", device = torch.device("cuda:0"))

@@ -17,5 +17,15 @@
 
 ## Training and testing
 
+build environment and install dependencies:
+
+```bash
+conda create -n myenv python=3.11
+conda activate myenv
+conda install numpy scipy pandas matplotlib scikit-learn
+conda install pytorch torchvision torchaudio
+pip install -r requirements.txt
+```
+
 1. Run the training script `train.py` with the appropriate model type.
 2. Run the testing script `test.py` with the appropriate model type.

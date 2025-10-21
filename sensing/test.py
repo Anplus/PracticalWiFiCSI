@@ -33,4 +33,4 @@ def test(device, model_path):
 
     return accuracy, avg_loss
 
-test(device = torch.device("cpu"), model_path='./model_file/AlexNet_model_200.pth')
+# test(device = torch.device("cpu"), model_path='./model_file/AlexNet_model_200.pth')
