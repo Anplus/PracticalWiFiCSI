@@ -22,7 +22,7 @@ curl --ftp-pasv --ftp-skip-pasv-ip \
 
 2. Run the MATLAB script `DFSExtractionCode/generate_dataset.m`. Before running, open the script and set the `input_root` variable to the folder containing your `.dat` files. The script converts `.dat` → `.mat` and saves the results to the configured output folder.
 
-3. Create a `shuffle.txt` file that lists all dataset file paths (one per line). Use relative paths if you plan to move the dataset.
+3. Then run the MATLAB script `DFSExtractionCode/generate_index.m` to create a `shuffle.txt` file that lists all dataset file paths (one per line). Use relative paths if you plan to move the dataset.
 
 ## Training and testing
 
